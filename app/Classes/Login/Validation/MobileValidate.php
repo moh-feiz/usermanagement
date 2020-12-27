@@ -12,21 +12,21 @@ class MobileValidate
     public function validate($mobile, $ip)
     {
 
-        if (!self::checkExist($mobile) || !self::required($mobile) || !self::mobileValid($mobile) || !self::checkSendSms($mobile) || !self::checkBlackList($ip)) {
+        if ( !self::required($mobile) || !self::mobileValid($mobile) || !self::checkSendSms($mobile) || !self::checkBlackList($ip)) {
             return ['error' => true, 'message' => self::$error_message];
         }
         return ['error' => false, 'message' => 'موفق'];
 
     }
 
-    private static function checkExist($mobile)
-    {
-        if (!MobileRuls::checkExist($mobile)) {
-            self::$error_message = 'همچین شماره در سیستم موجود نیست';
-            return false;
-        }
-        return true;
-    }
+//    private static function checkExist($mobile)
+//    {
+//        if (!MobileRuls::checkExist($mobile)) {
+//            self::$error_message = 'همچین شماره در سیستم موجود نیست';
+//            return false;
+//        }
+//        return true;
+//    }
 
 
     private static function required($mobile)

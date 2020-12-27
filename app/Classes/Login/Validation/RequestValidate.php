@@ -25,9 +25,9 @@ class RequestValidate
         return ['error' => false, 'message' => 'موفق'];
     }
 
-    public function requestVerificationValidate($request)
+    public function requestVerificationValidate($verify_code, $mobile)
     {
-        if (!$request->verifycode || !$request->mobile) {
+        if (!$verify_code || !$mobile) {
             return ['error' => true, 'message' => 'کد تایید  یا موبایل وارد نشده است'];
         }
         return ['error' => false, 'message' => 'موفق'];

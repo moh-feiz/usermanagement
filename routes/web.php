@@ -46,6 +46,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('updateuser', 'UserController@updateuser');
             $router->post('siteregister', 'UserController@siteregister');
             $router->post('panelregister', 'UserController@panelregister');
+            $router->post('registerverify', 'UserController@registerverify');
         });
     });
 });

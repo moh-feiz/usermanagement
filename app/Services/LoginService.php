@@ -9,7 +9,7 @@ class LoginService
 {
     public function generateSmsCode()
     {
-        return rand(1000, 9999);
+        return rand(10000, 99999);
     }
 
     public function blackList($ip)

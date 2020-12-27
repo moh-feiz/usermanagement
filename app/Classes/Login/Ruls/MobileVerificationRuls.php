@@ -20,7 +20,7 @@ class MobileVerificationRuls
     public static function validCode($mobile, $verifycode)
     {
         // inja bayad be service user request bezanim va code ke sms shode ro ba code ke vared karde check konim
-        $user = User::where('email', $mobile)->first();
+        $user = User::where('username', $mobile)->first();
         $userVerifyCode = $user->verify_code;
         if ($userVerifyCode == $verifycode) {
             return true;

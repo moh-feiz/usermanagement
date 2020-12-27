@@ -7,6 +7,8 @@ namespace App\Classes\Login\Procedure;
 use App\Classes\Login\LoginTry\LoginTry;
 use App\Classes\Login\SmsTry\SmsTry;
 use App\Classes\Login\Validation\MobileValidate;
+
+use App\Classes\UserManagement\UserRegister\UserRegister;
 use App\Models\User;
 use App\Services\LoginService;
 use App\Services\UserService;
@@ -37,10 +39,13 @@ class Otp
         // inja bayad verifycode send konam va baraye user ham in verifyCode ro save konim
         $login_service = new LoginService;
         $verifyCode = $login_service->generateSmsCode();
-        $mytime = Carbon::now('Asia/Tehran');
-        $now = $mytime->toDateTimeString();
 
         $user_service = new UserService;
+        $check_user_exist = $user_service->checkUserExist($mobile);
+        if ($check_user_exist == null) {
+            $user_register = new UserRegister;
+            $user_register->userRegisterWithMobile($mobile);
+        }
         $user_service->saveSmsForUser($mobile, $verifyCode);
 
         return ['error' => false, 'message' => $verifyCode, 'mobile' => $mobile];
