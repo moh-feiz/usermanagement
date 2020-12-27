@@ -21,32 +21,29 @@ class UserController extends Controller
 
     public function siteregister(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
-            'username' => 'bail|required|unique:users|max:11|numeric|min:11',
-            'email' => 'bail|email:rfc,dns|unique:users',
-            'password' => 'bail|required|confirmed|min:6',
-        ]);
-        $messages = [
+            'username' => 'bail|required|unique:users|numeric',
+            'email' => 'email:rfc,dns|unique:users',
+            'password' => 'required|min:6',
+        ], [
             'username.required' => 'شماره موبایل مورد نیاز است',
             'username.unique' => 'این شماره تلفن همراه قبلا ثبت نام شده است',
-            'username.min' => 'شماره تلقن همراه نمیتواند کمتر از 11 رقم باشد',
-            'username.max' => 'شماره تلفن همراه نمیتواند بیشتر از 11 رقم باشد',
+          //  'username.min' => 'شماره تلفن همراه معتبر نیست',
+         //   'username.max' => 'شماره تلفن همراه معتبر نیست',
             'username.numeric' => 'شماره تلفن همراه معتبر نیست',
             'email.unique' => 'این ایمیل قبلا ثبت نام شده است ',
             'email.email' => 'لطفا یک ایمیل معتبر وارد کنید',
             'password.required' => 'وارد کردن رمزعبور الزامیست',
             'password.min' => 'رمزعبور نمیتواند کمتر از 6 کاراکتر باشد',
-        ];
+        ]);
+
         if ($validator->fails()) {
+            $messages = $validator->errors()->getMessages();
             return response()->json(['error' => true, 'message' => $messages]);
         }
-
         $user_management = new UserRegister;
         $register = $user_management->setUserForSite($request);
         return response()->json($register);
-
-
     }
 
 
