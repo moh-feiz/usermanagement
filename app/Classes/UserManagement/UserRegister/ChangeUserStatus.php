@@ -11,7 +11,7 @@ class ChangeUserStatus
     const ACTIVE = 10;
     const DEACTIVE = 20;
 
-    public function atctive($username)
+    public function active($username)
     {
         $user_service = new UserService;
         $user = $user_service->checkUserExist($username);

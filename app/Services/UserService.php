@@ -12,6 +12,7 @@ class UserService
 {
     public function saveSmsForUser($mobile, $verifyCode)
     {
+
         $mytime = Carbon::now('Asia/Tehran');
         $now = $mytime->toDateTimeString();
         $user = User::where('username', $mobile)->first();
@@ -19,11 +20,13 @@ class UserService
         $user->verification_sms_at = $now;
         $user->save();
 
+
     }
 
     public function checkUserExist($mobile)
     {
         $user = User::where('username', $mobile)->first();
+
         if ($user) {
             return $user;
         }

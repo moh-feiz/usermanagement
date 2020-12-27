@@ -69,7 +69,7 @@ class UserRegisterHandler
             return ['error' => true, 'message' => $validate['message'], 'username' => $request->username];
         }
         $user_change_status = new ChangeUserStatus();
-        $user_change_status->atctive($request->username);
+        $user_change_status->active($request->username);
         return ['error' => false, 'message' => 'ثبت نام با موفقیت به پایان رسید', 'username' => $request->username];
 
 

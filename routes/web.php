@@ -42,8 +42,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'v1'], function () use ($router) {
         $router->group(['prefix' => 'user'], function () use ($router) {
-            $router->post('getuser', 'UserController@getuser');
-            $router->post('updateuser', 'UserController@updateuser');
+            $router->post('get', 'UserController@get');
+            $router->post('update', 'UserController@update');
+            $router->post('setpassword', 'UserController@setPassword');
             $router->post('siteregister', 'UserController@siteregister');
             $router->post('panelregister', 'UserController@panelregister');
             $router->post('registerverify', 'UserController@registerverify');
