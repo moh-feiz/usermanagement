@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\UserManagement\User as UserManagementUser;
 use App\Classes\UserManagement\UserRegister;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,8 +29,8 @@ class UserController extends Controller
         ], [
             'username.required' => 'شماره موبایل مورد نیاز است',
             'username.unique' => 'این شماره تلفن همراه قبلا ثبت نام شده است',
-          //  'username.min' => 'شماره تلفن همراه معتبر نیست',
-         //   'username.max' => 'شماره تلفن همراه معتبر نیست',
+            //  'username.min' => 'شماره تلفن همراه معتبر نیست',
+            //   'username.max' => 'شماره تلفن همراه معتبر نیست',
             'username.numeric' => 'شماره تلفن همراه معتبر نیست',
             'email.unique' => 'این ایمیل قبلا ثبت نام شده است ',
             'email.email' => 'لطفا یک ایمیل معتبر وارد کنید',
@@ -47,6 +48,42 @@ class UserController extends Controller
     }
 
 
+    public function get(Request $request)
+    {
+        $userManager = new UserManagementUser();
+        $user = $userManager->get($request->username);
+
+        if ($user) {
+            return response()->json(['user' => $user, 'message' => 'کاربر یافت شد'], 201);
+        } else {
+            return response()->json(['error' => true, 'message' => 'کاربر مورد نظر یافت نشد'], 201);
+        }
+    }
+
+    public function setPassword(Request $request)
+    {
+        $userManager = new UserManagementUser();
+        $setPassowrd = $userManager->setPassowrd($request->all());
+
+        if ($setPassowrd) {
+            return response()->json(['error' => false, 'message' => 'رمز عبور با موفقیت ثبت شد'], 201);
+        } else {
+            return response()->json(['error' => true, 'message' => 'خطا در ثبت رمز عبور'], 201);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $userManager = new UserManagementUser();
+        $updateUser =  $userManager->update($request->all());
+
+        if ($updateUser) {
+            return response()->json(['error' => false, 'message' => 'تغییرات با موفقیت ثبت شد'], 201);
+        } else {
+            return response()->json(['error' => true, 'message' => 'خطا در ویرایش اطلاعات'], 201);
+        }
+    }
+
     public function test(Request $request)
     {
 
@@ -62,15 +99,10 @@ class UserController extends Controller
         $plainPassword = $request->input('password');
         $user->password = app('hash')->make($plainPassword);
 
-
         if ($user->save()) {
             return response()->json(['user' => $user, 'message' => 'CREATED'], 201);
         } else {
             return response()->json(['message' => 'User Registration Failed!'], 409);
         }
-
-
     }
-
-
 }
