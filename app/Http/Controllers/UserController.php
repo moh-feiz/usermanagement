@@ -21,11 +21,11 @@ class UserController extends Controller
 
     public function siteregister(Request $request)
     {
-        die('3');
+
         $validator = Validator::make($request->all(), [
-            'username' => 'required|unique:users|max:11|numeric|min:11',
-            'email' => 'email:rfc,dns|unique:users',
-            'password' => 'required|confirmed|min:6',
+            'username' => 'bail|required|unique:users|max:11|numeric|min:11',
+            'email' => 'bail|email:rfc,dns|unique:users',
+            'password' => 'bail|required|confirmed|min:6',
         ]);
         $messages = [
             'username.required' => 'شماره موبایل مورد نیاز است',
