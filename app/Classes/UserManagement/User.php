@@ -3,49 +3,49 @@
 namespace App\Classes\UserManagement;
 
 use App\Models\User as ModelsUser;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
+use stdClass;
 
 class User
 {
-    public function get($username)
-    {
-        $user = ModelsUser::where('username', '=', $username)->first();
-
-        if ($user) {
-            return $user;
-        }
-
-        return false;
-    }
-
-    //SET PASSWORD FOR A USER WHO DOES NOT HAVE A PASSWORD
     public function setPassowrd($userInformation)
     {
-        //GET USER
-        $user = $this->get($userInformation->username);
 
-        //SET PASSWORD
-        $user->password = Hash::make($$userInformation->password);
+        $userManager = new UserService();
+        $user = $userManager->checkUserExist($userInformation['username']);
 
-        //SAVE AND RETURN
+        $response = new stdClass;
+
+        if ($user->email == '' || $user->email == null) {
+            $response->error = true;
+            $response->message = 'ایمیل برای کاربر ثبت نشده';
+            $response->status = 400;
+            return $response;
+        }
+
+        $user->password = Hash::make($userInformation['password']);
+
         if ($user->save()) {
-            return true;
+            $response->error = false;
+            $response->message = 'ایمیل با موفقیت برای کاربر ثبت شد';
+            $response->status = 200;
+            return $response;
         } else {
-            return false;
+            $response->error = true;
+            $response->message = 'خطا در ثبت رمز عبور';
+            $response->status = 400;
+            return $response;
         }
     }
 
-    //UPDATE USER INFO (PROFILE)
     public function update($userInformation)
     {
-        //GET USER
-        $user = $this->get($userInformation->username);
+        $userManager = new UserService();
+        $user = $userManager->checkUserExist($userInformation['username']);
 
-        //CHANGE USER INFORMATION
-        $user->email = $userInformation->email;
+        $user->email = $userInformation['email'];
 
-
-        //SAVE AND RETURN
         if ($user->save()) {
             return true;
         } else {

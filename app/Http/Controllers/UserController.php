@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\UserManagement\User as UserManagementUser;
 use App\Classes\UserManagement\UserRegister;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -50,8 +51,8 @@ class UserController extends Controller
 
     public function get(Request $request)
     {
-        $userManager = new UserManagementUser();
-        $user = $userManager->get($request->username);
+        $userManager = new UserService();
+        $user = $userManager->checkUserExist($request->username);
 
         if ($user) {
             return response()->json(['user' => $user, 'message' => 'کاربر یافت شد'], 201);
@@ -65,11 +66,7 @@ class UserController extends Controller
         $userManager = new UserManagementUser();
         $setPassowrd = $userManager->setPassowrd($request->all());
 
-        if ($setPassowrd) {
-            return response()->json(['error' => false, 'message' => 'رمز عبور با موفقیت ثبت شد'], 201);
-        } else {
-            return response()->json(['error' => true, 'message' => 'خطا در ثبت رمز عبور'], 201);
-        }
+        return response()->json($setPassowrd);
     }
 
     public function update(Request $request)
