@@ -13,6 +13,7 @@ class LoginOtpTest extends TestCase
 
         $this->seeJsonStructure([
             "error",
+            "username",
             "message",
         ]);
     }

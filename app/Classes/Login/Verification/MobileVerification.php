@@ -17,7 +17,7 @@ class MobileVerification
     public function login($request, $role)
     {
         $requestValidate = new RequestValidate;
-        $validate = $requestValidate->requestVerificationValidate($request);
+        $validate = $requestValidate->requestVerificationValidate($request->verifycode, $request->mobile);
         $loginWithVerify = new LoginVerify;
 
         if (!$validate['error']) {
@@ -33,11 +33,12 @@ class MobileVerification
         $login_service = new LoginService;
         $verifycode = $login_service->generateSmsCode();
         $user_service = new UserService;
-        $save_sms_for_user = $user_service->saveSmsForUser($request->mobile, $verifycode);
-        if ($save_sms_for_user) {
-            return ['error' => false, 'message' => $verifycode, 'mobile' => $request->mobile];
-        }
+        $check_user_exist = $user_service->checkUserExist($request->mobile);
+        if ($check_user_exist) {
+            $user_service->saveSmsForUser($request->mobile, $verifycode);
+             return ['error' => false, 'message' => $verifycode, 'mobile' => $request->mobile];
 
+        }
         return ['error' => true, 'message' => "چنین شماره همراهی ثبت نشده است!", 'mobile' => $request->mobile];
     }
 
