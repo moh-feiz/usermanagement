@@ -26,7 +26,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('/sitelogin', 'LoginController@sitelogin');
         $router->post('/panellogin', 'LoginController@panellogin');
         $router->post('/mobile-verification', 'LoginController@mobileverification');
-
     });
 });
 
@@ -50,4 +49,3 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         });
     });
 });
-

@@ -5,6 +5,7 @@ namespace App\Classes\Jwt\Token;
 use App\Classes\Jwt\Blacklist\Blacklist;
 use Carbon\Carbon;
 use App\Classes\Jwt\EncodeParts;
+use App\Services\UserService;
 
 class Validate
 {
@@ -18,6 +19,9 @@ class Validate
         //Split and decode the token
         $parseToken = new Parse;
         $parsedToken = $parseToken->parse($token);
+
+        $userManager = new UserService();
+        $user = $userManager->checkUserExist(json_decode($parsedToken['payload'])->phone);
 
         //Put them together and encode again
         $encodeParts = new EncodeParts;
@@ -39,7 +43,9 @@ class Validate
         $blacklist = new Blacklist;
         $existsInBlacklist = $blacklist->exist(json_decode($parsedToken['payload'])->phone);
 
-        if (!$signatureValid || !$tokenValid || $tokenExpired || $existsInBlacklist) {
+
+
+        if (!$signatureValid || !$tokenValid || $tokenExpired || $existsInBlacklist || !$user) {
             return 'Token is NOT valid.';
         }
 
