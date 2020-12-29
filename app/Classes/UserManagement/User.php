@@ -52,4 +52,16 @@ class User
             return false;
         }
     }
+
+    public function safeDelete($request)
+    {
+        $user_service = new UserService;
+        $user = $user_service->checkUserExist($request->username);
+        if ($user) {
+            $user->delete();
+            return ['error' => false, 'message' => 'کاربر باموفقیت حذف شد', 'username' => $request->username];
+        }
+        return ['error' => false, 'message' => ' کاربری با این اطلاعات یافت نشد', 'username' => $request->username];
+
+    }
 }

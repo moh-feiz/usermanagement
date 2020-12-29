@@ -20,12 +20,13 @@ use Laravel\Passport\Client;
 */
 
 
-
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'v1'], function () use ($router) {
-        $router->post('/sitelogin', 'LoginController@sitelogin');
-        $router->post('/panellogin', 'LoginController@panellogin');
-        $router->post('/mobile-verification', 'LoginController@mobileverification');
+        $router->group(['prefix' => 'login'], function () use ($router) {
+            $router->post('site-login', 'LoginController@sitelogin');
+            $router->post('panel-login', 'LoginController@panellogin');
+            $router->post('mobile-verification', 'LoginController@mobileverification');
+        });
     });
 });
 
@@ -42,11 +43,22 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'v1'], function () use ($router) {
         $router->group(['prefix' => 'user'], function () use ($router) {
             $router->post('get', 'UserController@get');
-            $router->post('update', 'UserController@update');
+            $router->post('user', 'UserController@update');
+            $router->post('delete', 'UserController@safedelete');
             $router->post('setpassword', 'UserController@setPassword');
-            $router->post('siteregister', 'UserController@siteregister');
-            $router->post('panelregister', 'UserController@panelregister');
-            $router->post('registerverify', 'UserController@registerverify');
+            $router->post('site-register', 'UserController@siteregister');
+            $router->post('panel-register', 'UserController@panelregister');
+            $router->post('mobile-verification', 'UserController@mobileverification');
+            $router->post('check-access', 'UserController@checkaccess');
+        });
+    });
+});
+
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->group(['prefix' => 'v1'], function () use ($router) {
+        $router->group(['prefix' => 'profile'], function () use ($router) {
+            $router->post('/', 'ProfileController@profile');
+
         });
     });
 });

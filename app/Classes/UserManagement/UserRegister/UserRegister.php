@@ -12,7 +12,6 @@ class UserRegister
     const USER = 10;
     const ADMIN = 20;
 
-
     public function registerUserForSite(Request $request, $verification_sms_at = null, $verify_code)
     {
         $user = new User();
@@ -31,30 +30,31 @@ class UserRegister
         }
     }
 
+    public function registerUserForPanelAdmin(Request $request)
+    {
+        $user = new User();
+        $user->username = $request->input('username');
+        $user->email = $request->input('email');
+        $user->role = self::ADMIN;
+        $user->status = ChangeUserStatus::ACTIVE;
+        $plainPassword = $request->input('password');
+        $user->password = app('hash')->make($plainPassword);
 
-//    public function registerUserForPanelAdmin(Request $request)
-//    {
-//        $user = new User();
-//        $user->username = $request->input('username');
-//        $user->email = $request->input('email');
-//        $user->role = self::ADMIN;
-//        $user->status = self::ACTIVE;
-//        $plainPassword = $request->input('password');
-//        $user->password = app('hash')->make($plainPassword);
-//
-//        if ($user->save()) {
-//            return ['error' => false, 'message' => 'ثبت نام با موفقیت به پایان رسید'];
-//        } else {
-//            return ['error' => true, 'message' => 'ثبت نام شما با خطا روبرو شده است'];
-//        }
-//    }
+        if ($user->save()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    public function userRegisterWithMobile($mobile)
+    public function userRegisterWithMobile($mobile, $verification_sms_at = null, $verify_code = null)
     {
         $user = new User();
         $user->username = $mobile;
         $user->role = self::USER;
         $user->status = ChangeUserStatus::ACTIVE;
+        $user->verification_sms_at = $verification_sms_at;
+        $user->verify_code = $verify_code;
         $user->save();
     }
 

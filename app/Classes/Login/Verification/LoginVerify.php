@@ -7,6 +7,7 @@ namespace App\Classes\Login\Verification;
 use App\Classes\Jwt\Token;
 use App\Classes\Login\SmsTry\SmsTry;
 use App\Classes\Login\Validation\MobileVerificationValidate;
+use App\Classes\UserManagement\UserRegister\ChangeUserStatus;
 
 class LoginVerify
 {
@@ -33,6 +34,7 @@ class LoginVerify
 
         $jwt = new Token;
         $token = $jwt->generate($role, $mobile);
+
         return ['error' => false, 'message' => $token, 'mobile' => $mobile];
     }
 

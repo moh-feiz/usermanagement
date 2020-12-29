@@ -1,14 +1,12 @@
 <?php
 
 
-class UserRegisterTest extends TestCase
+class ProfileTest extends TestCase
 {
-    public function testUserRegister()
+    public function testProfile()
     {
         $this->post('/api/v1/user/site-register', [
             "username" => "09123456789",
-            "email" => "moh@gmail.com",
-            "password" => "123456",
         ]);
 
         $this->seeJsonStructure([

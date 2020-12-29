@@ -25,7 +25,7 @@ class UserService
 
     public function checkUserExist($mobile)
     {
-        $user = User::where('username', $mobile)->first();
+        $user = User::where('username', $mobile)->where('deleted_at' , null)->first();
 
         if ($user) {
             return $user;

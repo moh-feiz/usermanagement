@@ -37,7 +37,7 @@ class UserRegisterHandler
                 $verify_code = $login_service->generateSmsCode();
                 $now = Carbon::now()->setTimezone('Asia/Tehran');
                 $user_register = new UserRegister;
-                $user_register->registerUserForSite($request, $now ,$verify_code);
+                $user_register->registerUserForSite($request, $now, $verify_code);
 
                 return ['error' => false, 'message' => $verify_code, 'username' => $request->username];
             } else {
@@ -72,6 +72,17 @@ class UserRegisterHandler
         $user_change_status->active($request->username);
         return ['error' => false, 'message' => 'ثبت نام با موفقیت به پایان رسید', 'username' => $request->username];
 
+    }
 
+    public function registerPanelAdminHandler($request)
+    {
+        $request_validation = $this->validation($request);
+        if ($request_validation['error'] == false) {
+            $user_register = new UserRegister;
+            $user_register->registerUserForPanelAdmin($request);
+            return ['error' => false, 'message' => 'ثبت نام با موفقیت به پایان رسید', 'username' => $request->username];
+        } else {
+            return $request_validation;
+        }
     }
 }

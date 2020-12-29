@@ -39,12 +39,12 @@ class Otp
         // inja bayad verifycode send konam va baraye user ham in verifyCode ro save konim
         $login_service = new LoginService;
         $verifyCode = $login_service->generateSmsCode();
-
+        $now = \Illuminate\Support\Carbon::now()->setTimezone('Asia/Tehran');
         $user_service = new UserService;
         $check_user_exist = $user_service->checkUserExist($mobile);
         if ($check_user_exist == null) {
             $user_register = new UserRegister;
-            $user_register->userRegisterWithMobile($mobile);
+            $user_register->userRegisterWithMobile($mobile ,$now , $verifyCode);
         }
         $user_service->saveSmsForUser($mobile, $verifyCode);
 

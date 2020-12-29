@@ -25,7 +25,7 @@ class LoginController extends Controller
         //
     }
 
-    public function sitelogin(Request $request)
+    public function SiteLogin(Request $request)
     {
         $role = "user";
         $login_handler = new LoginHandler;
