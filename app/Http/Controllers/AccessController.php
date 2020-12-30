@@ -21,7 +21,7 @@ class UserAccessController extends Controller
         }
     }
 
-    public function softDelete(Request $request)
+    public function softDeleteAccess(Request $request)
     {
         $userAccessManager = new UserAccess();
         $safeDelete = $userAccessManager->softDelete($request->access_id);

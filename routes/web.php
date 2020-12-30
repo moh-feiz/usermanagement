@@ -27,7 +27,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->group(['prefix' => 'uac'], function () use ($router) {
             $router->post('set', 'UserAccessController@setUserAccess');
             $router->post('get', 'UserAccessController@getUserAccess');
-            $router->post('alter', 'UserAccessController@alterAccess');
+        });
+        $router->group(['prefix' => 'access'], function () use ($router) {
+            $router->post('set', 'AccessController@setAccess');
+            $router->post('alter', 'AccessController@alterAccess');
+            $router->post('delete', 'AccessController@softDeleteAccess');
         });
 
         $router->group(['prefix' => 'token'], function () use ($router) {
