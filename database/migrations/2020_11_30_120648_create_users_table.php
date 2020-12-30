@@ -18,8 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique()->notNullable();
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
-            $table->integer('role')->notNullable()->comment = '10=user , 20=admin';
-            $table->integer('status')->notNullable()->comment = '10=deactive,20=active';
+            $table->integer('role')->notNullable()->comment('10=user , 20=admin');
+            $table->integer('status')->notNullable()->comment('10=deactive,20=active');
+            $table->text('user_access')->nullable();
             $table->integer('verify_code')->nullable();
             $table->dateTime('verification_sms_at')->nullable();
             $table->timestamps();
