@@ -20,27 +20,31 @@ use Laravel\Passport\Client;
 */
 
 
+
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'v1'], function () use ($router) {
+
+        $router->group(['prefix' => 'uac'], function () use ($router) {
+            $router->post('set', 'UserAccessController@setUserAccess');
+            $router->post('get', 'UserAccessController@getUserAccess');
+            $router->post('alter', 'UserAccessController@alterAccess');
+        });
+
+        $router->group(['prefix' => 'token'], function () use ($router) {
+            $router->post('checkauth', 'TokenController@verify');
+            $router->post('invalidate', 'TokenController@inValidate');
+        });
+
         $router->group(['prefix' => 'login'], function () use ($router) {
             $router->post('site-login', 'LoginController@sitelogin');
             $router->post('panel-login', 'LoginController@panellogin');
             $router->post('mobile-verification', 'LoginController@mobileverification');
         });
-    });
-});
 
-$router->group(['prefix' => 'api'], function () use ($router) {
-    $router->group(['prefix' => 'v1'], function () use ($router) {
-        $router->group(['prefix' => 'token'], function () use ($router) {
-            $router->post('checkauth', 'TokenController@verify');
-            $router->post('invalidate', 'TokenController@inValidate');
+        $router->group(['prefix' => 'profile'], function () use ($router) {
+            $router->post('/', 'ProfileController@profile');
         });
-    });
-});
 
-$router->group(['prefix' => 'api'], function () use ($router) {
-    $router->group(['prefix' => 'v1'], function () use ($router) {
         $router->group(['prefix' => 'user'], function () use ($router) {
             $router->post('get', 'UserController@get');
             $router->post('user', 'UserController@update');
@@ -50,15 +54,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('panel-register', 'UserController@panelregister');
             $router->post('mobile-verification', 'UserController@mobileverification');
             $router->post('check-access', 'UserController@checkaccess');
-        });
-    });
-});
-
-$router->group(['prefix' => 'api'], function () use ($router) {
-    $router->group(['prefix' => 'v1'], function () use ($router) {
-        $router->group(['prefix' => 'profile'], function () use ($router) {
-            $router->post('/', 'ProfileController@profile');
-
         });
     });
 });
