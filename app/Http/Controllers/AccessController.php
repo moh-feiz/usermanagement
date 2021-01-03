@@ -6,7 +6,7 @@ use App\Classes\UserManagement\UAC\UserAccess;
 use Illuminate\Http\Request;
 
 
-class UserAccessController extends Controller
+class AccessController extends Controller
 {
     public function setAccess(Request $request)
     {

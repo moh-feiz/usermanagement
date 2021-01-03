@@ -97,7 +97,6 @@ class UserController extends Controller
             $safe_deleted = $user_manager->safeDelete($request);
             return response()->json($safe_deleted);
         }
-
     }
 
     public function checkAccess(Request $request)

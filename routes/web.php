@@ -49,6 +49,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('/', 'ProfileController@profile');
         });
 
+        $router->group(['prefix' => 'formerpsg'], function () use ($router) {
+            $router->post('get', 'FormerPassengerController@get');
+            $router->post('set', 'FormerPassengerController@handler');
+        });
+
         $router->group(['prefix' => 'user'], function () use ($router) {
             $router->post('get', 'UserController@get');
             $router->post('user', 'UserController@update');
