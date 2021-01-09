@@ -7,11 +7,11 @@ use App\Models\FormerPassengers;
 
 class Set
 {
-    public function set($user_id, $passenger)
+    public function set($username, $passenger)
     {
         $newPassenger = new FormerPassengers();
 
-        $newPassenger->user_id = $user_id;
+        $newPassenger->username = $username;
         $newPassenger->first_name_fa = $passenger['first_name_fa'];
         $newPassenger->last_name_fa = $passenger['last_name_fa'];
         $newPassenger->first_name_en = $passenger['first_name_en'];

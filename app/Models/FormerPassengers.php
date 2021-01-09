@@ -14,7 +14,7 @@ class FormerPassengers extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'username',
         'first_name_fa',
         'Last_name_fa',
         'first_name_en',

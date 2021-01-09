@@ -43,6 +43,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('site-login', 'LoginController@sitelogin');
             $router->post('panel-login', 'LoginController@panellogin');
             $router->post('mobile-verification', 'LoginController@mobileverification');
+            $router->post('resend-verify-code', 'LoginController@resendverifycode');
         });
 
         $router->group(['prefix' => 'profile'], function () use ($router) {
@@ -51,7 +52,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         $router->group(['prefix' => 'formerpsg'], function () use ($router) {
             $router->post('get', 'FormerPassengerController@get');
-            $router->post('set', 'FormerPassengerController@handler');
+            $router->post('set', 'FormerPassengerController@set');
         });
 
         $router->group(['prefix' => 'user'], function () use ($router) {

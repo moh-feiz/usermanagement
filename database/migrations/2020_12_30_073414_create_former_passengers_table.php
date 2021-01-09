@@ -15,7 +15,7 @@ class CreateFormerPassengersTable extends Migration
     {
         Schema::create('former_passengers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('user_id')->notNullable();
+            $table->string('username')->notNullable()->comment('parent mobile number');
             $table->string('first_name_fa')->nullable();
             $table->string('last_name_fa')->nullable();
             $table->string('first_name_en')->nullable();

@@ -7,9 +7,9 @@ use App\Models\FormerPassengers;
 
 class Get
 {
-    public function get($user_id)
+    public function get($username)
     {
-        $passengers = FormerPassengers::where('user_id', '=', $user_id)->get();
+        $passengers = FormerPassengers::where('username', '=', $username)->get();
 
         if ($passengers) {
             return $passengers;

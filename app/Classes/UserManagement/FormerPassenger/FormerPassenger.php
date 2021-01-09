@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class FormerPassenger
 {
-    
 
     public function get($user_id)
     {
@@ -21,18 +20,18 @@ class FormerPassenger
         return $formerPassengers;
     }
 
-    public function set($user_id,$passengers)
+    public function set($username,$passengers)
     {
         $set = new Set();
-        $newPassenger = $set->set($user_id, $passengers);
+        $newPassenger = $set->set($username, $passengers);
 
         return $newPassenger;
     }
 
-    public function update($user_id,$passengers)
+    public function update($username,$passengers)
     {
         $get = new Get();
-        $formerPassengers = $get->get($user_id);
+        $formerPassengers = $get->get($username);
 
         $update = new Update();
         $updatePassenger = $update->update($formerPassengers, $passengers);
